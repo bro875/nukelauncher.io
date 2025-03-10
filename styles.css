@@ -30,7 +30,7 @@ body {
 
 #map {
     margin-top: 20px;
-    background-image: url('world-map.jpg'); /* Use an image for the map */
+    background-image: url('images/images (9).jpg'); /* Update the path */
     background-size: cover;
     height: 300px;
     margin-top: 20px;
