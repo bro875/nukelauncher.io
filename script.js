@@ -1,54 +1,60 @@
-document.addEventListener("DOMContentLoaded", function() {
-    let launchButton = document.getElementById("launch-button");
-    let mapContainer = document.getElementById("map-container");
-    let map = document.getElementById("map");
-    let countdownElement = document.getElementById("countdown");
-    let explosion = document.getElementById("explosion");
-    let successMessage = document.getElementById("success-message");
-    let nukeSound = document.getElementById("nuke-sound");
+document.addEventListener("DOMContentLoaded", function () {
+    const launchButton = document.getElementById("launch-button");
+    const mapContainer = document.getElementById("map-container");
+    const map = document.getElementById("map");
+    const countdownText = document.getElementById("countdown");
+    const explosionText = document.getElementById("explosion");
+    const successMessage = document.getElementById("success-message");
+    const nukeSound = document.getElementById("nuke-sound");
 
-    launchButton.addEventListener("click", function() {
-        console.log("Button clicked"); // Debugging check
-        this.style.display = "none";
+    launchButton.addEventListener("click", function () {
+        // Hide the button and show the map
+        launchButton.style.display = "none";
         mapContainer.classList.remove("hidden");
     });
 
-    map.addEventListener("click", function(event) {
-        console.log("Map clicked"); // Debugging check
+    map.addEventListener("click", function (event) {
+        const rect = map.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
 
-        let rect = map.getBoundingClientRect();
-        let x = event.clientX - rect.left;
-        let y = event.clientY - rect.top;
+        // Move the explosion text to the clicked location
+        explosionText.style.position = "absolute";
+        explosionText.style.left = `${x}px`;
+        explosionText.style.top = `${y}px`;
+        explosionText.style.fontSize = "100px"; // Make the explosion big
+        explosionText.classList.remove("hidden");
 
-        mapContainer.classList.add("hidden");
-        countdownElement.classList.remove("hidden");
+        // Start countdown
+        let countdown = 5;
+        countdownText.textContent = `Launching in ${countdown}...`;
+        countdownText.classList.remove("hidden");
 
-        let timeLeft = 5;
-        countdownElement.innerText = "Launching in " + timeLeft + "...";
+        const interval = setInterval(() => {
+            countdown--;
+            if (countdown > 0) {
+                countdownText.textContent = `Launching in ${countdown}...`;
+            } else {
+                clearInterval(interval);
+                countdownText.classList.add("hidden");
+                explosionText.classList.remove("hidden");
+                nukeSound.play();
 
-        let countdownInterval = setInterval(function() {
-            timeLeft--;
-            countdownElement.innerText = "Launching in " + timeLeft + "...";
+                // Show "Launch Successful" text
+                successMessage.classList.remove("hidden");
 
-            if (timeLeft === 0) {
-                clearInterval(countdownInterval);
-                countdownElement.classList.add("hidden");
-
-                nukeSound.play(); // Play sound
-                explosion.style.left = `${x}px`;
-                explosion.style.top = `${y}px`;
-                explosion.style.display = "block";
-
+                // Hide explosion and map after 5 seconds
                 setTimeout(() => {
-                    explosion.style.display = "none";
-                    successMessage.classList.remove("hidden");
-
-                    setTimeout(() => {
-                        successMessage.classList.add("hidden");
-                        launchButton.style.display = "block"; // Reset button
-                    }, 5000);
-                }, 1000);
+                    explosionText.classList.add("hidden");
+                    successMessage.classList.add("hidden");
+                    mapContainer.classList.add("hidden");
+                    launchButton.style.display = "block"; // Show button again
+                }, 5000);
             }
+        }, 1000);
+    });
+});
+
         }, 1000);
     });
 });
