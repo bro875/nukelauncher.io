@@ -1,20 +1,23 @@
-#explosion {
+#launch-button {
     position: absolute;
-    font-size: 150px;  /* Really big explosion emoji */
-    color: white;
-    padding: 0;
-    background: none;  /* No background */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    height: 200px;
+    background-color: red;
     border: none;
-    width: auto;
-    display: none;
+    border-radius: 50%;
+    font-size: 100px;
+    text-align: center;
+    cursor: pointer;
 }
 
 #map-container {
-    margin-top: 50px;  /* Move the map down */
+    text-align: center;
+    margin-top: 50px;
 }
-
 
 .hidden {
     display: none;
 }
-
