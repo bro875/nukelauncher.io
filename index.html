@@ -1,42 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nuke Launcher</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-
-    <!-- The Big Red Button -->
-    <button id="launch-button">☢️</button>
-
-    <!-- The World Map -->
-    <div id="map-container" class="hidden">
-        <h2>Click a Location to Target</h2>
-        <div id="map"></div>
-    </div>
-
-    <!-- Countdown Display -->
-    <div id="countdown" class="hidden"></div>
-
-    <!-- Launch Successful Message -->
-    <div id="success-message" class="hidden">Launch Successful!</div>
-
-    <!-- Explosion Effect (Large Textbox) -->
-    <div id="explosion" class="hidden">💥 EXPLOSION!!! 💥</div>
-
-    <!-- Sound -->
-    <audio id="nuke-sound" src="nuke-bomb.mp3" preload="auto"></audio>
-
-    <script src="script.js"></script>
-
-</body>
-</html>
-
-
-    <script src="script.js"></script>
-
-</body>
-</html>
-
+<button id="launch-button">☢️</button>
+<div id="map-container" class="hidden">
+    <p>Click a location to target</p>
+    <img id="map" src="images (9).jpg" alt="World Map">
+</div>
+<p id="countdown" class="hidden"></p>
+<span id="explosion" class="hidden">💥</span>
+<p id="success-message" class="hidden">Launch Successful!</p>
+<audio id="nuke-sound" src="nuke-bomb.mp3"></audio>
