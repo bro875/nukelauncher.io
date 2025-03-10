@@ -1,47 +1,56 @@
-document.getElementById("launch-button").addEventListener("click", function() {
-    this.style.display = "none"; // Hide the big red button
-    document.getElementById("map-container").classList.remove("hidden"); // Show the map
-});
-
-document.getElementById("map").addEventListener("click", function(event) {
-    let x = event.offsetX;
-    let y = event.offsetY;
-    
-    document.getElementById("map-container").classList.add("hidden"); // Hide map
+document.addEventListener("DOMContentLoaded", function() {
+    let launchButton = document.getElementById("launch-button");
+    let mapContainer = document.getElementById("map-container");
+    let map = document.getElementById("map");
     let countdownElement = document.getElementById("countdown");
-    countdownElement.classList.remove("hidden");
+    let explosion = document.getElementById("explosion");
+    let successMessage = document.getElementById("success-message");
+    let nukeSound = document.getElementById("nuke-sound");
 
-    let timeLeft = 5;
-    countdownElement.innerText = "Launching in " + timeLeft + "...";
+    launchButton.addEventListener("click", function() {
+        console.log("Button clicked"); // Debugging check
+        this.style.display = "none";
+        mapContainer.classList.remove("hidden");
+    });
 
-    let countdownInterval = setInterval(function() {
-        timeLeft--;
+    map.addEventListener("click", function(event) {
+        console.log("Map clicked"); // Debugging check
+
+        let rect = map.getBoundingClientRect();
+        let x = event.clientX - rect.left;
+        let y = event.clientY - rect.top;
+
+        mapContainer.classList.add("hidden");
+        countdownElement.classList.remove("hidden");
+
+        let timeLeft = 5;
         countdownElement.innerText = "Launching in " + timeLeft + "...";
-        
-        if (timeLeft === 0) {
-            clearInterval(countdownInterval);
-            countdownElement.classList.add("hidden");
 
-            document.getElementById("nuke-sound").play(); // Play explosion sound
+        let countdownInterval = setInterval(function() {
+            timeLeft--;
+            countdownElement.innerText = "Launching in " + timeLeft + "...";
 
-            // Show explosion at clicked location
-            let explosion = document.getElementById("explosion");
-            explosion.style.left = x + "px";
-            explosion.style.top = y + "px";
-            explosion.style.display = "block";
+            if (timeLeft === 0) {
+                clearInterval(countdownInterval);
+                countdownElement.classList.add("hidden");
 
-            setTimeout(() => {
-                explosion.style.display = "none"; // Hide explosion after 1 second
-                let successMessage = document.getElementById("success-message");
-                successMessage.classList.remove("hidden");
+                nukeSound.play(); // Play sound
+                explosion.style.left = `${x}px`;
+                explosion.style.top = `${y}px`;
+                explosion.style.display = "block";
 
                 setTimeout(() => {
-                    successMessage.classList.add("hidden");
-                    document.getElementById("launch-button").style.display = "block"; // Reset the button
-                }, 5000);
+                    explosion.style.display = "none";
+                    successMessage.classList.remove("hidden");
 
-            }, 1000);
-        }
-    }, 1000);
+                    setTimeout(() => {
+                        successMessage.classList.add("hidden");
+                        launchButton.style.display = "block"; // Reset button
+                    }, 5000);
+                }, 1000);
+            }
+        }, 1000);
+    });
 });
+
 
