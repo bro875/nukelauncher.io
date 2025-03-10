@@ -1,10 +1,13 @@
+document.getElementById("launch-button").addEventListener("click", function() {
+    this.style.display = "none"; // Hide the big red button
+    document.getElementById("map-container").classList.remove("hidden"); // Show the map
+});
+
 document.getElementById("map").addEventListener("click", function(event) {
     let x = event.offsetX;
     let y = event.offsetY;
     
-    // Hide map and start countdown
-    let mapContainer = document.getElementById("map-container");
-    mapContainer.classList.add("hidden"); 
+    document.getElementById("map-container").classList.add("hidden"); // Hide map
     let countdownElement = document.getElementById("countdown");
     countdownElement.classList.remove("hidden");
 
@@ -19,33 +22,25 @@ document.getElementById("map").addEventListener("click", function(event) {
             clearInterval(countdownInterval);
             countdownElement.classList.add("hidden");
 
-            // Play explosion sound
-            document.getElementById("nuke-sound").play();
+            document.getElementById("nuke-sound").play(); // Play explosion sound
 
             // Show explosion at clicked location
             let explosion = document.getElementById("explosion");
-            explosion.style.left = (x - explosion.offsetWidth / 2) + "px"; // Center explosion
-            explosion.style.top = (y - explosion.offsetHeight / 2) + "px"; // Center explosion
+            explosion.style.left = x + "px";
+            explosion.style.top = y + "px";
             explosion.style.display = "block";
 
-            // Hide map at the same time as explosion appears
             setTimeout(() => {
-                mapContainer.classList.add("hidden"); // Hide the map
-            }, 1000);
-
-            // Show "Launch Successful!" after explosion
-            setTimeout(function() {
-                explosion.style.display = "none";
+                explosion.style.display = "none"; // Hide explosion after 1 second
                 let successMessage = document.getElementById("success-message");
                 successMessage.classList.remove("hidden");
 
-                // Hide success message after 5 seconds
-                setTimeout(function() {
+                setTimeout(() => {
                     successMessage.classList.add("hidden");
-                    document.getElementById("launch-button").style.display = "block"; // Reset button
+                    document.getElementById("launch-button").style.display = "block"; // Reset the button
                 }, 5000);
 
-            }, 1000); // Explosion lasts for 1 second
+            }, 1000);
         }
     }, 1000);
 });
