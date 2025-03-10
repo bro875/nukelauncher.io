@@ -1,51 +1,56 @@
 body {
-    font-family: Arial, sans-serif;
     text-align: center;
-}
-
-#launch-button {
-    font-size: 32px;
-    background-color: red;
-    color: white;
-    padding: 20px;
-    border-radius: 10px;
-    cursor: pointer;
-    border: none;
-}
-
-#launch-button span {
-    font-size: 32px;
-}
-
-.hidden {
-    display: none;
-}
-
-#animation {
-    font-size: 24px;
-    padding: 30px;
+    font-family: Arial, sans-serif;
     background-color: black;
     color: white;
 }
 
+#launch-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150px;
+    height: 150px;
+    font-size: 50px;
+    background-color: red;
+    color: yellow;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+}
+
+#map-container {
+    margin-top: 20px;
+}
+
 #map {
-    margin-top: 20px;
-    background-image: url('images/images (9).jpg'); /* Update the path */
+    width: 600px;
+    height: 400px;
+    background: url('images (9).jpg') no-repeat center center;
     background-size: cover;
-    height: 300px;
-    margin-top: 20px;
+    margin: auto;
+    position: relative;
+    cursor: crosshair;
 }
 
 #countdown {
-    font-size: 32px;
-    padding: 20px;
+    font-size: 30px;
+    margin-top: 20px;
 }
 
-#confirm-launch {
-    font-size: 20px;
-    padding: 10px;
-    background-color: green;
-    color: white;
-    cursor: pointer;
-    border-radius: 5px;
+#success-message {
+    font-size: 40px;
+    color: green;
+    margin-top: 20px;
+}
+
+#explosion {
+    position: absolute;
+    font-size: 60px;
+    display: none;
+}
+
+.hidden {
+    display: none;
 }
