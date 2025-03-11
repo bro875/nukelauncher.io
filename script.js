@@ -3,14 +3,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const mapContainer = document.getElementById("map-container");
     const map = document.getElementById("map");
     const countdownText = document.getElementById("countdown");
-    const explosionText = document.getElementById("explosion");
+    const explosion = document.getElementById("explosion");
     const successMessage = document.getElementById("success-message");
     const nukeSound = document.getElementById("nuke-sound");
 
     launchButton.addEventListener("click", function () {
-        // Hide the button and show the map
+        // Hide button and show map
         launchButton.style.display = "none";
-        mapContainer.classList.remove("hidden");
+        mapContainer.style.display = "block";
     });
 
     map.addEventListener("click", function (event) {
@@ -18,45 +18,39 @@ document.addEventListener("DOMContentLoaded", function () {
         const x = event.clientX - rect.left;
         const y = event.clientY - rect.top;
 
-        // Move the explosion text to the clicked location
-        explosionText.style.position = "absolute";
-        explosionText.style.left = `${x}px`;
-        explosionText.style.top = `${y}px`;
-        explosionText.style.fontSize = "100px"; // Make the explosion big
-        explosionText.classList.remove("hidden");
+        // Position explosion emoji
+        explosion.style.position = "absolute";
+        explosion.style.left = `${rect.left + x}px`;
+        explosion.style.top = `${rect.top + y}px`;
+        explosion.style.fontSize = "100px"; // Make it big
+        explosion.style.background = "none"; // Remove background
+        explosion.classList.remove("hidden");
 
         // Start countdown
-        let countdown = 5;
-        countdownText.textContent = `Launching in ${countdown}...`;
+        countdownText.innerText = "Launching in 5...";
         countdownText.classList.remove("hidden");
 
-        const interval = setInterval(() => {
+        let countdown = 5;
+        const countdownInterval = setInterval(() => {
             countdown--;
             if (countdown > 0) {
-                countdownText.textContent = `Launching in ${countdown}...`;
+                countdownText.innerText = `Launching in ${countdown}...`;
             } else {
-                clearInterval(interval);
+                clearInterval(countdownInterval);
                 countdownText.classList.add("hidden");
-                explosionText.classList.remove("hidden");
-                nukeSound.play();
-
-                // Show "Launch Successful" text
                 successMessage.classList.remove("hidden");
 
-                // Hide explosion and map after 5 seconds
+                // Play nuke sound
+                nukeSound.play();
+
+                // Remove success message, explosion, and map after 5 seconds
                 setTimeout(() => {
-                    explosionText.classList.add("hidden");
                     successMessage.classList.add("hidden");
-                    mapContainer.classList.add("hidden");
-                    launchButton.style.display = "block"; // Show button again
+                    explosion.classList.add("hidden");
+                    mapContainer.style.display = "none";
+                    launchButton.style.display = "block";
                 }, 5000);
             }
         }, 1000);
     });
 });
-
-        }, 1000);
-    });
-});
-
-
